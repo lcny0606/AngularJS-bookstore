@@ -1,0 +1,31 @@
+.nav{border-bottom: 1px solid #337ab7;margin: 30px auto;width:70%;padding-bottom:10px ;}
+.search{width: 40%;}
+
+.book-middle{margin: 30px auto;}
+.sort-ul{list-style: none;border-bottom: 1px solid #f0f0f0;border-top:1px solid #F0F0F0;margin: 0 auto;padding: 6px 0;}
+.sort-ul li{float: left;padding:0 20px;text-align: center;}
+.book-list{margin: 30px 0 0 0;}
+.booklist-ul{list-style: none;}
+.booklist-ul li{float: left;border-top:2px solid #337AB7;padding: 30px 0;}
+.booklist-ul li img{float: left;width: 200px;height: 200px;}
+.booktitle{font-size: 16px;font-weight: 600;display: inline-block;margin: 10px 0;}
+.nowpri{font-family: arial,'Hiragino Sans GB',"Simsun";color: #fa5000;font-size: 18px;font-weight: 600;}
+.oldpri{color: #969696;display: inline-block;margin-left: 15px;}
+.oldpri span{text-decoration: line-through;color: #969696;}
+.author{font-size: 14px;}
+.summary {font-size: 12px;line-height: 24px;height: 50px;overflow: hidden;white-space: normal;text-overflow: ellipsis;}
+
+.msg-nav{font-size: 12px;}
+.msg-img{display: inline-block;float: left;}
+.msg-right{float: left;}
+.msg-right h3{margin: 20px 0;font-weight: 600;color: #333;}
+.book-msg-sumy{width: 443px;height: 40px;overflow: hidden;white-space: normal;text-overflow: ellipsis;}
+.msg-price{height: 60px;padding: 10px;background: #ebebeb;}
+.changenum{position: relative;float:left;width: 80px;margin-top: 27px;}
+#change_num{width:48px;height: 32px;padding: 5px;margin-right: 3px;}
+.changenum a{position: absolute;display: inline-block;width: 25px;height: 20px;}
+.num_add{background: url(../images/webimg/product_sprites.png);background-position: -37px 0;}
+.num_del{background: url(../images/webimg/product_sprites.png);background-position: -37px -17px; top:17px}
+.recommend{width: 100%;}
+.recommend h3{width: 100%;height: 14px;border-bottom: 1px solid #333;text-align: center;}
+.recommend h3 span{display: inline-block;text-align: center;background: #fff;font-size: 16px;}

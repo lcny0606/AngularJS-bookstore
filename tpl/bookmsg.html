@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>bookmsg</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/style.css" />
+		<script src="../js/angular.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				(function($) {
+					$.getUrlParam = function(name) {
+						var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+						var r = window.location.search.substr(1).match(reg);
+						if (r != null) return unescape(r[2]);
+						return null;
+					}
+				})(jQuery);
+
+				function getUrlParam(name) {
+					//构造一个含有目标参数的正则表达式对象  
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+					//匹配目标参数  
+					var r = window.location.search.substr(1).match(reg);
+					//返回参数值  
+					if (r != null) return unescape(r[2]);
+					return null;
+				}
+				
+				var bookid=$.getUrlParam('id');
+				$.ajax({
+					type:"post",
+					url:"../control/bookmsg.php",
+					async:true,
+					data:{"ID":bookid},
+					datatype:'json',
+					success:function(data){
+						var data_j=eval("("+data+")");
+						var book_name=data_j.rs.bookname;
+						var book_type=data_j.rs.type;
+						var bookimg=data_j.rs.bookimg;
+						$(".msg-type").html(book_type);
+						$('.msg-name').html(book_name);
+						$(".msg-img").html("<img src='../images/bookimg/"+bookimg+"'>");
+						$(".msg-right h3").html(data_j.rs.bookname);
+						$('.book-msg-sumy').html(data_j.rs.summary);
+						$("#author").html(data_j.rs.author);
+						$("#msj-time").html(data_j.rs.time);
+						$("#oldpri").html(data_j.rs.oldprice);
+						$("#nowpri").html(data_j.rs.price);
+					}
+				});
+				
+			})
+		</script>
+	</head>
+
+	<body>
+		<ul class=" nav-pills nav ">
+			<li role="presentation" class="active">
+				<a href="">
+					IT
+				</a>
+			</li>
+			<li>
+				<a href="">
+					计算机理论
+				</a>
+			</li>
+			<li>
+				<a href="">
+					管理经营
+				</a>
+			</li>
+			<li>
+				<a href="">
+					商业史传
+				</a>
+			</li>
+			<li>
+				<a href="">
+					文学
+				</a>
+			</li>
+			<li class=" search " style="float: right;">
+				<div class="row">
+					<div class="col-lg-10 clo-md-10 col-xs-10">
+						<div class="input-group">
+							<input type="text" class="form-control" aria-label="...">
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									搜索
+									<span class="caret">
+									</span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li>
+										<a href="#">
+											IT
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											计算机理论
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											管理经营
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											商业史传
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											文学
+										</a>
+									</li>
+								</ul>
+							</div>
+							<!-- /btn-group -->
+						</div>
+						<!-- /input-group -->
+					</div>
+					<!-- /.col-lg-6 -->
+				</div>
+				<!-- /.row -->
+			</li>
+		</ul>
+		<div class="container" ng-app="bookmsg">
+			<div class="row">
+				<div class="book-msg col-lg-10 clo-md-10 col-xs-11 clearfix" style='float: none;margin: 0 auto;'>
+					<p class="msg-nav">
+						<a href="../index.php">首页</a>
+						<span class='gt'>></span>
+						<a href="" class='msg-type'></a>
+						<span class="gt">></span>
+						<span class="msg-name"></span>
+					</p>	
+					<a href="javascript:" class="msg-img">
+					</a>
+					<div class="msg-right col-lg-6 col-md-6 col-xs-6 clearfix">
+						<h3></h3>
+						<p class="book-msg-sumy"></p>
+						<div class='msg-author'>
+							<span>作者：<a href="javascript:" id="author"></a></span>
+							<span>出版社：长江出版社</span>
+							<span>出版时间<a href="" id='msj-time'></a></span>
+						</div>
+						<div class="msg-price">
+							<p>定价：<a href="javascript" id='oldpri'></a></p>
+							<p>折扣价：<a href="javascript" id='nowpri'></a></p>
+						</div>
+						<div class="changenum " ng-controller="numadd">
+							<input type="text"  id="change_num" value="{{booknum}}" />
+							<a href="javascript:" class='num_add' ng-click="numadd()"></a>
+							<a href="javacript:" class="num_del" ng-click="numdel()"></a>
+						</div>
+						<div class="btn" style="float: left;margin-top: 20px;">
+							
+							<button type='button' class="btn btn-danger"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
+							<button type="button" class="btn btn-danger" style='background: #ffedee;color:#ff2832 ;'>一键购买</button>
+						</div>
+						
+					</div>
+					
+					
+			</div>
+			</div>
+			<div class="recommend">
+						<h3><span>看过本书的人还看了</span></h3>
+					</div>
+		</div>
+			
+
+		<script src="../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ngApp.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ngCtrl.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

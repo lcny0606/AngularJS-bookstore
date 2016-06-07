@@ -1,0 +1,38 @@
+
+<div class="col-lg-11 col-md-11 col-xs-11 book-list" style="float: none;"  ng-controller="booklist-price">
+						<ul class="booklist-ul clearfix ">
+							<li class="col-lg-12 col-md-12 col-xs-12 clearfix" ng-repeat="x in bookstore">
+								<a href="">
+									<img src="./images/bookimg/{{x.bookimg}}"  class="img-responsive"/>
+								</a>
+								<div class="col-lg-8 col-md-8 col-xs-6 ">
+									<a href="" class='booktitle'>
+										{{x.bookname}}
+									</a>
+									<p class='bookprcie'>
+										<span class='nowpri'>{{x.price |currency}}</span>
+										<a href="javascript:" class='oldpri'>
+											定价：<span >{{x.oldprice|currency}}</span>
+										</a>
+									</p>
+									<p class="author">
+										<a href="">
+											{{x.author}}
+										</a>著
+									</p>
+									<p class='summary'>
+										全面简介：<span>{{x.summary}}</span>
+									</p>
+									<div class="bookbtn ">
+										<button type="button" class="btn btn-success" style="background: #fa5000;border: 1px solid #fa5000;">
+											立即购买
+										</button>
+										<button type="button" class="btn btn-success">
+											加入购物车
+										</button>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+		
