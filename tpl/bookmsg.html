@@ -28,30 +28,37 @@
 					if (r != null) return unescape(r[2]);
 					return null;
 				}
-				
-				var bookid=$.getUrlParam('id');
+				var bookid = $.getUrlParam('id');
 				$.ajax({
-					type:"post",
-					url:"../control/bookmsg.php",
-					async:true,
-					data:{"ID":bookid},
-					datatype:'json',
-					success:function(data){
-						var data_j=eval("("+data+")");
-						var book_name=data_j.rs.bookname;
-						var book_type=data_j.rs.type;
-						var bookimg=data_j.rs.bookimg;
+					type: "post",
+					url: "../control/bookmsg.php",
+					async: true,
+					data: {
+						"ID": bookid
+					},
+					datatype: 'json',
+					success: function(data) {
+						var data_j = eval("(" + data + ")");
+						var book_name = data_j.rs.bookname;
+						var book_type = data_j.rs.type;
+						var bookimg = data_j.rs.bookimg;
 						$(".msg-type").html(book_type);
 						$('.msg-name').html(book_name);
-						$(".msg-img").html("<img src='../images/bookimg/"+bookimg+"'>");
+						$(".msg-img").html("<img src='../images/bookimg/" + bookimg + "'>");
 						$(".msg-right h3").html(data_j.rs.bookname);
 						$('.book-msg-sumy').html(data_j.rs.summary);
-						$("#author").html(data_j.rs.author);
-						$("#msj-time").html(data_j.rs.time);
-						$("#oldpri").html(data_j.rs.oldprice);
-						$("#nowpri").html(data_j.rs.price);
+						$(".author").html(data_j.rs.author);
+						$(".msj-time").html(data_j.rs.time);
+						$("#oldpri").html("$"+data_j.rs.oldprice);
+						$("#nowpri").html("$"+data_j.rs.price);
+						$(".authmsg").html(data_j.rs.authmsg);
+						$(".catalog").html(data_j.rs.catalog);
+						$(".more").html(data_j.rs.more);
 					}
 				});
+				var nowpri=$("#nowpri").val();
+				var num=$("#change_num").val();
+				$("#allprice").html(num*nowpri);
 				
 			})
 		</script>
@@ -132,51 +139,101 @@
 				<!-- /.row -->
 			</li>
 		</ul>
-		<div class="container" ng-app="bookmsg">
+		<div class="container" ng-app="bookmsg" style="margin-bottom: 50px;">
 			<div class="row">
-				<div class="book-msg col-lg-10 clo-md-10 col-xs-11 clearfix" style='float: none;margin: 0 auto;'>
+				<div class="book-msg col-lg-10 clo-md-10 col-xs-10 clearfix" style='float: none;margin: 0 auto;'>
 					<p class="msg-nav">
 						<a href="../index.php">首页</a>
 						<span class='gt'>></span>
 						<a href="" class='msg-type'></a>
 						<span class="gt">></span>
 						<span class="msg-name"></span>
-					</p>	
+					</p>
 					<a href="javascript:" class="msg-img">
 					</a>
-					<div class="msg-right col-lg-6 col-md-6 col-xs-6 clearfix">
+					<div class="msg-right col-lg-6 col-md-6 col-xs-6 clearfix" ng-controller="numadd">
 						<h3></h3>
 						<p class="book-msg-sumy"></p>
 						<div class='msg-author'>
-							<span>作者：<a href="javascript:" id="author"></a></span>
+							<span>作者：<a href="javascript:" class="author"></a></span>
 							<span>出版社：长江出版社</span>
-							<span>出版时间<a href="" id='msj-time'></a></span>
+							<span>出版时间： <a href="" class='msj-time'></a></span>
 						</div>
 						<div class="msg-price">
-							<p>定价：<a href="javascript" id='oldpri'></a></p>
-							<p>折扣价：<a href="javascript" id='nowpri'></a></p>
+							<p>定价：
+								<a href="javascript:" id='oldpri'></a>
+							</p>
+							<p>折扣价：
+								<a href="javascript:" id='nowpri'></a>
+							</p>
 						</div>
-						<div class="changenum " ng-controller="numadd">
-							<input type="text"  id="change_num" value="{{booknum}}" />
+						<div class="changenum " >
+							<input type="text" id="change_num" value="{{booknum}}" />
 							<a href="javascript:" class='num_add' ng-click="numadd()"></a>
 							<a href="javacript:" class="num_del" ng-click="numdel()"></a>
-						</div>
-						<div class="btn" style="float: left;margin-top: 20px;">
 							
+							
+						</div>
+						<div class="clearfix" style="float: left;margin-top: 20px;">
+							<p class="allpri"> 总价:<span id="allprice"></span></p>
 							<button type='button' class="btn btn-danger"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
 							<button type="button" class="btn btn-danger" style='background: #ffedee;color:#ff2832 ;'>一键购买</button>
+							
+								
 						</div>
-						
+
 					</div>
-					
-					
+
+				</div>
 			</div>
-			</div>
-			<div class="recommend">
+			<div class="container" ng-controller="recbook">
+				<div class="row">
+					<div class="recommend ">
 						<h3><span>看过本书的人还看了</span></h3>
+						<div class="rec-book clearfix" >
+							<ul>
+								<li ng-repeat='x in recbook' class="clearfix">
+								<a href="bookmsg.html?id={{x.id}}">
+									<img src='../images/bookimg/{{x.bookimg}}'>
+									</a><br>
+									<span>{{x.price | currency}}</span><br />
+									<a  class='msg-bookname'  href="bookmsg.html?id={{x.id}}">{{x.bookname}}</a><br />
+									<a class="rec-author">{{x.author}}  等著</a>
+								</li>
+							</ul>
+						</div>						
 					</div>
-		</div>
+					<div class="bookdetail col-lg-11 col-md-11 col-xs-11">
+						<div class="detail">
+							<p class="det-title clearfix">
+								<span>作者简介</span>
+							</p>
+						</div>
+							<p class='authmsg'></p>
+					</div>
+					<div class="bookdetail col-lg-11 col-md-11 col-xs-11">
+						<div class="detail">
+							<p class="det-title clearfix">
+								<span>简要目录</span>
+							</p>
+						</div>
+							<p class='catalog'></p>
+					</div>
+					<div class="bookdetail col-lg-11 col-md-11 col-xs-11">
+						<div class="detail">
+							<p class="det-title clearfix">
+								<span>内容推荐</span>
+							</p>
+						</div>
+							<p class='more'></p>
+					</div>
+					
+				</div>
+			</div>
 			
+			
+			
+		</div>
 
 		<script src="../js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/ngApp.js" type="text/javascript" charset="utf-8"></script>

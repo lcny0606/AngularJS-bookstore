@@ -45,7 +45,9 @@ book_msg.controller('numadd',function($scope){
 		$scope.numdel=function(){
 			$scope.booknum-=1;
 		}
-	
-	
-	
+})
+
+book_msg.controller("recbook",function($scope,$http){
+	$http.get("../control/rec-book.php")
+	.success(function(response){$scope.recbook=response.rs;});
 })
